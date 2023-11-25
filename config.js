@@ -1,5 +1,8 @@
 /** Common config for bookstore. */
 
+// Load environment variables from .env
+require('dotenv').config();
+
 let DB_URI = `postgresql://`;
 
 if (process.env.NODE_ENV === 'test') {
