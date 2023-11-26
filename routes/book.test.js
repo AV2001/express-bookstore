@@ -84,6 +84,31 @@ describe('POST /books', () => {
     });
 });
 
+describe('PUT /books/:isbn', () => {
+    test('Update a book', async () => {
+        const newBook = {
+            amazon_url: 'https://www.richardson.com/',
+            author: 'Dana Smith',
+            language: 'byn',
+            pages: 987,
+            publisher: 'Cooper, Snyder and Garza',
+            title: 'Adaptive foreground model',
+            year: 1960,
+        };
+        const updatedBook = { ...newBook, isbn: testBook.isbn };
+        const response = await request(app)
+            .put(`/books/${testBook.isbn}`)
+            .send(newBook);
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({ book: updatedBook });
+    });
+
+    test('Return 404 if invalid isbn is passed', async () => {
+        const response = await request(app).put('/books/12345678090');
+        expect(response.statusCode).toBe(404);
+    });
+});
+
 describe('DELETE /books/:isbn', () => {
     test('Delete a book', async () => {
         const response = await request(app).delete(`/books/${testBook.isbn}`);
