@@ -4,7 +4,7 @@ const request = require('supertest');
 const app = require('../app');
 const db = require('../db');
 
-let bookData;
+let testBook;
 
 beforeEach(async () => {
     let result = await db.query(
@@ -14,7 +14,7 @@ beforeEach(async () => {
         RETURNING *
         `
     );
-    bookData = result.rows[0];
+    testBook = result.rows[0];
 });
 
 afterEach(async () => {
@@ -29,15 +29,15 @@ describe('GET /books', () => {
     test('Get all books', async () => {
         const response = await request(app).get('/books');
         expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual({ books: [bookData] });
+        expect(response.body).toEqual({ books: [testBook] });
     });
 });
 
 describe('GET /books/:id', () => {
     test('Get a book', async () => {
-        const response = await request(app).get(`/books/${bookData.isbn}`);
+        const response = await request(app).get(`/books/${testBook.isbn}`);
         expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual({ book: bookData });
+        expect(response.body).toEqual({ book: testBook });
     });
 
     test('Return 404 if invalid id is passed', async () => {
@@ -81,5 +81,17 @@ describe('POST /books', () => {
         const newBook = {};
         const response = await request(app).post('/books').send(newBook);
         expect(response.statusCode).toBe(400);
+    });
+});
+
+describe('DELETE /books/:isbn', () => {
+    test('Delete a book', async () => {
+        const response = await request(app).delete(`/books/${testBook.isbn}`);
+        expect(response.statusCode).toBe(200);
+    });
+
+    test('Return 404 if invalid isbn is passed', async () => {
+        const response = await request(app).delete('/books/1234567890');
+        expect(response.statusCode).toBe(404);
     });
 });
