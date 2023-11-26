@@ -1,0 +1,56 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/updateBook.json",
+    "type": "object",
+    "title": "Update Book Schema",
+    "properties": {
+        "amazon_url": {
+            "type": "string",
+            "title": "The amazon_url Schema",
+            "examples": ["http://a.co/eobPtX2"]
+        },
+        "author": {
+            "type": "string",
+            "title": "The author Schema",
+            "examples": ["Matthew Lane"]
+        },
+        "language": {
+            "type": "string",
+            "title": "The language Schema",
+            "examples": ["english"]
+        },
+        "pages": {
+            "type": "integer",
+            "title": "The pages Schema",
+            "examples": [264]
+        },
+        "publisher": {
+            "type": "string",
+            "title": "The publisher Schema",
+            "examples": ["Princeton University Press"]
+        },
+        "title": {
+            "type": "string",
+            "title": "The title Schema",
+            "examples": [
+                "Power-Up: Unlocking the Hidden Mathematics in Video Games"
+            ]
+        },
+        "year": {
+            "type": "integer",
+            "title": "The year Schema",
+            "examples": [2017]
+        }
+    },
+    "examples": [
+        {
+            "amazon_url": "http://a.co/eobPtX2",
+            "author": "Matthew Lane",
+            "language": "english",
+            "pages": 264,
+            "publisher": "Princeton University Press",
+            "title": "Power-Up: Unlocking the Hidden Mathematics in Video Games",
+            "year": 2017
+        }
+    ]
+}
