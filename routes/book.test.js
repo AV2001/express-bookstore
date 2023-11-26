@@ -15,7 +15,6 @@ beforeEach(async () => {
         `
     );
     bookData = result.rows[0];
-    console.log(bookData);
 });
 
 afterEach(async () => {
@@ -24,4 +23,12 @@ afterEach(async () => {
 
 afterAll(async () => {
     await db.end();
+});
+
+describe('GET /', () => {
+    test('Get all books', async () => {
+        const response = await request(app).get('/books');
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({ books: [bookData] });
+    });
 });
