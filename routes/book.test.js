@@ -63,6 +63,20 @@ describe('POST /books', () => {
         expect(response.body).toEqual({ book: newBook });
     });
 
+    test('Return 400 if isbn is missing', async () => {
+        const newBook = {
+            amazon_url: 'https://www.richardson.com/',
+            author: 'Dana Smith',
+            language: 'byn',
+            pages: 987,
+            publisher: 'Cooper, Snyder and Garza',
+            title: 'Adaptive foreground model',
+            year: 1960,
+        };
+        const response = await request(app).post('/books').send(newBook);
+        expect(response.statusCode).toBe(400);
+    });
+
     test('Return 400 if missing properties are passed', async () => {
         const newBook = {};
         const response = await request(app).post('/books').send(newBook);
