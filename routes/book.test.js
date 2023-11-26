@@ -25,10 +25,23 @@ afterAll(async () => {
     await db.end();
 });
 
-describe('GET /', () => {
+describe('GET /books', () => {
     test('Get all books', async () => {
         const response = await request(app).get('/books');
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual({ books: [bookData] });
+    });
+});
+
+describe('GET /books/:id', () => {
+    test('Get a book', async () => {
+        const response = await request(app).get(`/books/${bookData.isbn}`);
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({ book: bookData });
+    });
+
+    test('Return 404 if invalid id is passed', async () => {
+        const response = await request(app).get('/books/1234567890');
+        expect(response.statusCode).toBe(404);
     });
 });
